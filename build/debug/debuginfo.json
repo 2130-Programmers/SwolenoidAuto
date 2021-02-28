@@ -1,0 +1,23 @@
+[
+  {
+    "artifact": "frcJava (in project CoryXHatimFanFic-Imported)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "CoryXHatimFanFic-Imported",
+    "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project CoryXHatimFanficWIthAdditions)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "CoryXHatimFanficWIthAdditions",
+    "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project Swolenoid)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Swolenoid",
+    "language": "java"
+  }
+]

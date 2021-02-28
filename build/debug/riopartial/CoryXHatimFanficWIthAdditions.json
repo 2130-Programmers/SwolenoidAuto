@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcJava (in project CoryXHatimFanficWIthAdditions)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "CoryXHatimFanficWIthAdditions",
+    "language": "java"
+  }
+]

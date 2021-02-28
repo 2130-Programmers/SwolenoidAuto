@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcJava (in project Swolenoid)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Swolenoid",
+    "language": "java"
+  }
+]
