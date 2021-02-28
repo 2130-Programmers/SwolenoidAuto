@@ -78,13 +78,16 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void moveSwerveAxis(double leftX, double leftY, double rightX) {
+    double mod;
+
     leftY *= -1;
 
-    if(autonomous) {
-    double mod = 1;
-    }else{
-      double mod = .5;
+    if (autonomous) {
+      mod = 1;
+    } else {
+      mod = .5;
     }
+
     if (RobotContainer.limeValue()) {
       turnyThingy = limes();
     } else {
