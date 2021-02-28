@@ -27,10 +27,8 @@ public class AutonomousStep {
 
         double rotationPower = 0;
 
-
         if (rotation != 0) {
             double remainingRotation = rotation - RobotContainer.gyro.getAngle();
-
 
             if (remainingRotation > 45) {
                 rotationPower = -.3;
@@ -48,21 +46,20 @@ public class AutonomousStep {
                 rotationPower = 0;
             }
 
-        }else if(rotation == 0) {
+        } else if (rotation == 0) {
 
-            if(RobotContainer.gyro.getAngle() > 3) {
+            if (RobotContainer.gyro.getAngle() > 3) {
                 rotationPower = -.1;
-            }else if(RobotContainer.gyro.getAngle() < -3) {
+            } else if (RobotContainer.gyro.getAngle() < -3) {
                 rotationPower = .1;
             }
         }
 
         runningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp() - startTime;
-        
+
         if (runningTime > startTime && runningTime < endTime) {
             RobotContainer.driveTrain.moveSwerveAxis(y, x, rotationPower);
         }
-
 
         SmartDashboard.putNumber("X", x);
         SmartDashboard.putNumber("Y", y);
@@ -70,16 +67,16 @@ public class AutonomousStep {
         SmartDashboard.putNumber("Running Time", runningTime);
     }
 
-    public void circle(boolean leftOrRight){
+    public void circle(boolean leftOrRight) {
         double gradientX = 0;
         double gradientY = -1;
 
         gradientY += .1;
-        double yDir = gradientY/Math.abs(gradientY);
+        double yDir = gradientY / Math.abs(gradientY);
 
-        double finalY = yDir*(gradientY*gradientY)-.5;
+        double finalY = yDir * (gradientY * gradientY) - .5;
 
-        RobotContainer.driveTrain.moveSwerveAxis( 0, finalY, 0);
+        RobotContainer.driveTrain.moveSwerveAxis(0, finalY, 0);
     }
 
     public void resetGyro() {

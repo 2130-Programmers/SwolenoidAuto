@@ -18,9 +18,9 @@ public class Autonomous extends CommandBase {
   private double autoStartTime;
   private double currentTime;
 
-
-
-  //Creating steps
+  // CREATE STEPS FOR AUTONOMOUS HERE ~~ SYNTAX: AutonomousStep (name of step,
+  // repeating things like drive forward just have a number appended to the end.)
+  // = new AutonomousStep(startTime, endTime)
   AutonomousStep driveForward1 = new AutonomousStep(10, 15);
   AutonomousStep stop = new AutonomousStep(16, 20);
 
@@ -34,19 +34,32 @@ public class Autonomous extends CommandBase {
   @Override
   public void initialize() {
 
-    //RobotContainer.driveTrain.findAllZeros();
+    // RobotContainer.driveTrain.findAllZeros();
     RobotContainer.gyro.calibrate();
 
 
+    //Starts a timer for how long autonomous has been running.
     autoStartTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp();
     RobotContainer.driveTrain.setAutonomousState(true);
   }
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+    //~~~~~~~~Set Steps Here~~~~~~~~\\
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+
+    //Stepname.method
+    //.run for strafe or rotate
+    //.stopAll to stop all motors
+    //.resetGyro to zero the gyro
+
     driveForward1.run(.75, 0, 0);
     stop.stopAll();
+
 
     SmartDashboard.putNumber("CurrentTime", currentTime);
   }
@@ -55,6 +68,7 @@ public class Autonomous extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.driveTrain.setAutonomousState(false);
+    autoStartTime = 0;
   }
 
   // Returns true when the command should end.
