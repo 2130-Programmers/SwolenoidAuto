@@ -50,6 +50,8 @@ public class DriveTrain extends SubsystemBase {
   public double turnyThingy = 0;
 
   public boolean autonomous; // Autonomous state
+  public double autonomousStartTime;
+  public double autonomousRunningTime;
 
   public DriveTrain() {
     motorFL = new AlphaMotors(2, 1, 12, 10, 0);
@@ -73,19 +75,22 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  //Sets weather or not the bot is running in autonomous is enabled.
   public void setAutonomousState(boolean enabled) {
     autonomous = enabled;
   }
 
+
+  //Main method for driving.
   public void moveSwerveAxis(double leftX, double leftY, double rightX) {
     double mod;
 
     leftY *= -1;
 
     if (autonomous) {
-      mod = 1;
+      mod = .3;
     } else {
-      mod = .5;
+      mod = .75;
     }
 
     if (RobotContainer.limeValue()) {

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.AlphaMotors;
+import frc.robot.subsystems.AutonomousStep;
 
 
 /**
@@ -83,6 +84,15 @@ private Command m_autonomousCommand;
     }
     
     RobotContainer.driveTrain.findAllZeros();
+
+
+    RobotContainer.gyro.calibrate();
+
+        //Sets AutonomousState to true.
+        AutonomousStep startAutoTimer = new AutonomousStep();
+        RobotContainer.driveTrain.setAutonomousState(true);    
+        startAutoTimer.resetAutonomousTime();
+
     }
 
   /**

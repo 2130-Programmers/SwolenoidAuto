@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer;
 
@@ -11,17 +12,22 @@ import frc.robot.RobotContainer;
 public class AutonomousStep {
     double startTime; // Time to start running step.
     double endTime; // Time to stop running step
-    double runningTime; // The amount of time that Autonomous has been running
-    double autoStartTime; // The Time that autonomous started.
 
-    public void setAutonomousStartTime(double startTime) {
-        this.autoStartTime = startTime;
-    }
 
     public AutonomousStep(double startTime, double endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    public AutonomousStep() {
+
+    }
+
+    public void resetAutonomousTime() {
+        RobotContainer.driveTrain.autonomousStartTime = Timer.getFPGATimestamp();
+        RobotContainer.driveTrain.autonomousRunningTime = 0;
+    }
+
 
     public void run(double x, double y, double rotation) {
 
@@ -55,16 +61,16 @@ public class AutonomousStep {
             }
         }
 
-        runningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp() - startTime;
+        RobotContainer.driveTrain.autonomousRunningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp() - RobotContainer.driveTrain.autonomousStartTime;
 
-        if (runningTime > startTime && runningTime < endTime) {
+        if (RobotContainer.driveTrain.autonomousRunningTime > startTime && RobotContainer.driveTrain.autonomousRunningTime < endTime) {
             RobotContainer.driveTrain.moveSwerveAxis(y, x, rotationPower);
         }
 
         SmartDashboard.putNumber("X", x);
         SmartDashboard.putNumber("Y", y);
         SmartDashboard.putNumber("Rotation Power", rotationPower);
-        SmartDashboard.putNumber("Running Time", runningTime);
+        SmartDashboard.putNumber("Running Time", RobotContainer.driveTrain.autonomousRunningTime);
     }
 
     public void circle(boolean leftOrRight) {

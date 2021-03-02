@@ -15,14 +15,15 @@ public class Autonomous extends CommandBase {
 
   private DriveTrain driveTrain;
 
-  private double autoStartTime;
-  private double currentTime;
-
   // CREATE STEPS FOR AUTONOMOUS HERE ~~ SYNTAX: AutonomousStep (name of step,
   // repeating things like drive forward just have a number appended to the end.)
   // = new AutonomousStep(startTime, endTime)
-  AutonomousStep driveForward1 = new AutonomousStep(10, 15);
-  AutonomousStep stop = new AutonomousStep(16, 20);
+  //
+  //If no args in constructor, 
+  AutonomousStep startAutoTimer = new AutonomousStep();
+  AutonomousStep driveForward1 = new AutonomousStep(10, 20);
+  AutonomousStep stop = new AutonomousStep(20, 21);
+  AutonomousStep resetAutoTimer = new AutonomousStep();
 
   public Autonomous(DriveTrain drivesub) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,14 +34,6 @@ public class Autonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    // RobotContainer.driveTrain.findAllZeros();
-    RobotContainer.gyro.calibrate();
-
-
-    //Starts a timer for how long autonomous has been running.
-    autoStartTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp();
-    RobotContainer.driveTrain.setAutonomousState(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -57,18 +50,15 @@ public class Autonomous extends CommandBase {
     //.stopAll to stop all motors
     //.resetGyro to zero the gyro
 
-    driveForward1.run(.75, 0, 0);
+    driveForward1.run(1, .1, 0);
     stop.stopAll();
-
-
-    SmartDashboard.putNumber("CurrentTime", currentTime);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.driveTrain.setAutonomousState(false);
-    autoStartTime = 0;
+    resetAutoTimer.resetAutonomousTime();
   }
 
   // Returns true when the command should end.
