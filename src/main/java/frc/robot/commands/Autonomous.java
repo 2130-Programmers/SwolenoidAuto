@@ -19,7 +19,7 @@ public class Autonomous extends CommandBase {
   // repeating things like drive forward just have a number appended to the end.)
   // = new AutonomousStep(startTime, endTime)
   //
-  //If no args in constructor, 
+  //If no args in constructor, you can put a step in AutonomousInit
   AutonomousStep startAutoTimer = new AutonomousStep();
   AutonomousStep driveForward1 = new AutonomousStep(10, 20);
   AutonomousStep stop = new AutonomousStep(20, 21);
