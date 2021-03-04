@@ -21,8 +21,9 @@ public class Autonomous extends CommandBase {
   //
   //If no args in constructor, you can put a step in AutonomousInit
   AutonomousStep startAutoTimer = new AutonomousStep();
-  AutonomousStep driveForward1 = new AutonomousStep(10, 20);
-  AutonomousStep stop = new AutonomousStep(20, 21);
+  AutonomousStep drive1 = new AutonomousStep(5, 10.6);
+  AutonomousStep drive2 = new AutonomousStep(10.6, 11.85);
+  AutonomousStep stop = new AutonomousStep(11.75, 30);
   AutonomousStep resetAutoTimer = new AutonomousStep();
 
   public Autonomous(DriveTrain drivesub) {
@@ -34,6 +35,7 @@ public class Autonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.driveTrain.setAutonomousState(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -50,8 +52,9 @@ public class Autonomous extends CommandBase {
     //.stopAll to stop all motors
     //.resetGyro to zero the gyro
 
-    driveForward1.run(1, .1, 0);
-    stop.stopAll();
+      drive1.run(.2, 0, 0);
+      drive2.run(.05, .25, 0);
+      stop.run(0, 0, 0);
   }
 
   // Called once the command ends or is interrupted.

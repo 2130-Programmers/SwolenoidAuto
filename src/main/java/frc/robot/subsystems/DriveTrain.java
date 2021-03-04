@@ -87,27 +87,30 @@ public class DriveTrain extends SubsystemBase {
 
     leftY *= -1;
 
-    if (autonomous) {
-      mod = .3;
-    } else {
-      mod = .75;
-    }
+   if (autonomous) {
+     mod = 1;
+   } else {
+     mod = .3;
+   }
 
-    if (RobotContainer.limeValue()) {
-      turnyThingy = limes();
-    } else {
-      // creation of a deadzone
-      if (rightX >= .05 || rightX <= -.05) {
-        turnyThingy = rightX;
-      }
+
+   if (RobotContainer.limeValue()) {
+    turnyThingy = limes();
+  } else {
+    // creation of a deadzone
+    if (rightX >= .05 || rightX <= -.05) {
+      turnyThingy = rightX;
+    }else{
+      turnyThingy = 0;
     }
+  }
 
     // a b c and d are all sides of the robot and creates wheels as the sides. FR
     // wheel is wheel B D for example
     double a = leftX - turnyThingy * (l / r);
     double b = leftX + turnyThingy * (l / r);
-    double d = (leftY - turnyThingy * (w / r));
     double c = (leftY + turnyThingy * (w / r));
+    double d = (leftY - turnyThingy * (w / r));
 
     // calculates the speed based on the vector of where side x wants to go to where
     // y does
@@ -118,7 +121,7 @@ public class DriveTrain extends SubsystemBase {
 
     // This causes big probelems with zeroing because the values are still returning
     // some random value for certain cases and zeroing doesn't occure properly
-    // \/
+    //
     // atan2 returns null essentially when the values are zero so we check for that
     // here
     if (leftX == 0 && leftY == 0 && turnyThingy == 0) {

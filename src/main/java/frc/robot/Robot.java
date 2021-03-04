@@ -78,15 +78,15 @@ private Command m_autonomousCommand;
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    RobotContainer.gyro.calibrate();
+
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    
+
+
     RobotContainer.driveTrain.findAllZeros();
-
-
-    RobotContainer.gyro.calibrate();
 
         //Sets AutonomousState to true.
         AutonomousStep startAutoTimer = new AutonomousStep();
@@ -100,6 +100,9 @@ private Command m_autonomousCommand;
    */
   @Override
   public void autonomousPeriodic() {
+
+    RobotContainer.driveTrain.zeroAllEncodersBasedOnProx();
+
   }
 
   @Override

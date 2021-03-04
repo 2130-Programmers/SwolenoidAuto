@@ -13,7 +13,6 @@ public class AutonomousStep {
     double startTime; // Time to start running step.
     double endTime; // Time to stop running step
 
-
     public AutonomousStep(double startTime, double endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -27,7 +26,6 @@ public class AutonomousStep {
         RobotContainer.driveTrain.autonomousStartTime = Timer.getFPGATimestamp();
         RobotContainer.driveTrain.autonomousRunningTime = 0;
     }
-
 
     public void run(double x, double y, double rotation) {
 
@@ -55,16 +53,17 @@ public class AutonomousStep {
         } else if (rotation == 0) {
 
             if (RobotContainer.gyro.getAngle() > 3) {
-                rotationPower = -.1;
+                rotationPower = -.05;
             } else if (RobotContainer.gyro.getAngle() < -3) {
-                rotationPower = .1;
+                rotationPower = .05;
             }
         }
 
-        RobotContainer.driveTrain.autonomousRunningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp() - RobotContainer.driveTrain.autonomousStartTime;
+        RobotContainer.driveTrain.autonomousRunningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp()
+                - RobotContainer.driveTrain.autonomousStartTime;
 
-        if (RobotContainer.driveTrain.autonomousRunningTime > startTime && RobotContainer.driveTrain.autonomousRunningTime < endTime) {
-            RobotContainer.driveTrain.moveSwerveAxis(y, x, rotationPower);
+        if (RobotContainer.driveTrain.autonomousRunningTime > this.startTime && RobotContainer.driveTrain.autonomousRunningTime < this.endTime) {
+            RobotContainer.driveTrain.moveSwerveAxis(y, x*-1, rotationPower);
         }
 
         SmartDashboard.putNumber("X", x);

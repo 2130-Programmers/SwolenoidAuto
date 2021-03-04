@@ -19,5 +19,12 @@
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "Swolenoid",
     "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project SwolenoidAuto)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "SwolenoidAuto",
+    "language": "java"
   }
 ]

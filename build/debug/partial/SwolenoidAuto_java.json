@@ -1,0 +1,13 @@
+[
+  {
+    "name": "SwolenoidAuto (in project SwolenoidAuto)",
+    "file": "C:\\Code Files\\Alpha 2130\\SwolenoidAuto\\build\\libs\\SwolenoidAuto.jar",
+    "extensions": [
+      "C:\\Code Files\\Alpha 2130\\SwolenoidAuto\\build\\tmp\\expandedArchives\\halsim_gui-2021.2.1-windowsx86-64.zip_d99e9955ea409a7181a100ca5ccfa1fc\\windows\\x86-64\\shared\\halsim_gui.dll",
+      "C:\\Code Files\\Alpha 2130\\SwolenoidAuto\\build\\tmp\\expandedArchives\\halsim_ds_socket-2021.2.1-windowsx86-64.zip_298d0267aec4b74c1e06d46e7058a467\\windows\\x86-64\\shared\\halsim_ds_socket.dll"
+    ],
+    "env": {},
+    "librarydir": "C:\\Code Files\\Alpha 2130\\SwolenoidAuto\\build\\tmp\\jniExtractDir",
+    "mainclass": "frc.robot.Main"
+  }
+]
