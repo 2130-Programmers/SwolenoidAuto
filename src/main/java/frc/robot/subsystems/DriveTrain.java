@@ -87,24 +87,24 @@ public class DriveTrain extends SubsystemBase {
 
     leftY *= -1;
 
-   if (autonomous) {
-     mod = 1;
-   } else {
-     mod = .3;
-   }
-
-
-   if (RobotContainer.limeValue()) {
-    turnyThingy = limes();
-  } else {
-    // creation of a deadzone
-    if (rightX >= .05 || rightX <= -.05) {
-      turnyThingy = rightX;
-    }else{
-      turnyThingy = 0;
+    if (autonomous) {
+      mod = 1;
+    } else {
+      mod = .3;
     }
-  }
 
+    //TurnyThingy is a dumb name for the x value
+    if (RobotContainer.limeValue()) {
+      turnyThingy = limes();
+    } else {
+      // creation of a deadzone
+      if (rightX >= .05 || rightX <= -.05) {
+        turnyThingy = rightX;
+      }else{
+        turnyThingy = 0;
+      }
+    }
+    
     // a b c and d are all sides of the robot and creates wheels as the sides. FR
     // wheel is wheel B D for example
     double a = leftX - turnyThingy * (l / r);
@@ -131,8 +131,8 @@ public class DriveTrain extends SubsystemBase {
       RLAngle = 0;
     } else {
       // calculating the angles based off of side x and y
-      FRAngle = (Math.atan2(b, d) / Math.PI);
-      RRAngle = (Math.atan2(a, d) / Math.PI);
+      FRAngle = Math.atan2(b, d) / Math.PI;
+      RRAngle = Math.atan2(a, d) / Math.PI;
       FLAngle = Math.atan2(b, c) / Math.PI;
       RLAngle = Math.atan2(a, c) / Math.PI;
     }
