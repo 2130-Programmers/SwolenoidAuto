@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.AutonomousStep;
@@ -20,16 +20,15 @@ public class Autonomous extends CommandBase {
   // = new AutonomousStep(startTime, endTime)
   //
   //If no args in constructor, you can put a step in AutonomousInit
-  AutonomousStep startAutoTimer = new AutonomousStep();
   AutonomousStep drive1 = new AutonomousStep(5, 10.6);
   AutonomousStep drive2 = new AutonomousStep(10.6, 11.85);
   AutonomousStep stop = new AutonomousStep(11.75, 30);
   AutonomousStep resetAutoTimer = new AutonomousStep();
 
-  public Autonomous(DriveTrain drivesub) {
+  public Autonomous(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivesub);
-    driveTrain = drivesub;
+    addRequirements(driveTrain);
+    this.driveTrain = driveTrain;
   }
 
   // Called when the command is initially scheduled.
