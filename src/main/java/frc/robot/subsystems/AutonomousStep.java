@@ -10,26 +10,87 @@ import frc.robot.RobotContainer;
 
 /** Add your docs here. */
 public class AutonomousStep {
-    double startTime; // Time to start running step.
-    double endTime; // Time to stop running step
 
-    public AutonomousStep(double startTime, double endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
+    double rotationPower = 0;
+    boolean stepDone;
 
     public AutonomousStep() {
-
     }
 
-    public void resetAutonomousTime() {
-        RobotContainer.driveTrain.autonomousStartTime = Timer.getFPGATimestamp();
-        RobotContainer.driveTrain.autonomousRunningTime = 0;
+     /**
+      * @param direction The strafe direction for the robot
+                takes 45 degree intervals starting at 0
+      * @param power Power modifier - takes a value of 0 - 1
+      * @param distance The distance in stops that you want the robot to travel
+      */
+    public void run(int direction, double power, double distance) {
+        double y = 0;
+        double x = 0;
+
+        if (RobotContainer.gyro.getAngle() > 3) {
+            rotationPower = -.05;
+        } else if (RobotContainer.gyro.getAngle() < -3) {
+            rotationPower = .05;
+        }
+
+        double distanceRemaining = distance - Math.abs(((RobotContainer.driveTrain.motorFR.encoderCount()
+                + RobotContainer.driveTrain.motorFL.encoderCount() + RobotContainer.driveTrain.motorRR.encoderCount()
+                + RobotContainer.driveTrain.motorRL.encoderCount()) / 4));
+
+        if (distanceRemaining > 20) {
+            switch (direction) {
+                case 0:
+                    y = 1;
+                    x = 0;
+                    break;
+                case 45:
+                    y = 1;
+                    x = 1;
+                    break;
+                case 90:
+                    y = 0;
+                    x = 1;
+                    break;
+                case 135:
+                    y = -1;
+                    x = 1;
+                    break;
+                case 180:
+                    y = -1;
+                    x = 0;
+                    break;
+                case 225:
+                    y = -1;
+                    x = -1;
+                    break;
+                case 270:
+                    y = 0;
+                    x = -1;
+                    break;
+                case 315:
+                    y = 1;
+                    x = -1;
+                    break;
+                default:
+                    y = 0;
+                    x = 0;
+                    break;
+            }
+        } else if (distanceRemaining < 20 && distanceRemaining > 2) {
+            power = .1;
+        } else if (distanceRemaining < 2) {
+            power = 0;
+        }
+
+        stepDone = true;
+
+        SmartDashboard.putNumber("X", x);
+        SmartDashboard.putNumber("Y", y);
+
+        RobotContainer.driveTrain.moveSwerveAxis(y * power, x * (-1 * power), rotationPower);
     }
 
-    public void run(double x, double y, double rotation) {
-
-        double rotationPower = 0;
+    public void rotate(double rotation) {
 
         if (rotation != 0) {
             double remainingRotation = rotation - RobotContainer.gyro.getAngle();
@@ -50,38 +111,44 @@ public class AutonomousStep {
                 rotationPower = 0;
             }
 
-        } else if (rotation == 0) {
-
-            if (RobotContainer.gyro.getAngle() > 3) {
-                rotationPower = -.05;
-            } else if (RobotContainer.gyro.getAngle() < -3) {
-                rotationPower = .05;
-            }
+        } else {
+            System.out.print("Rotation Needs a Valid Value");
         }
+    }
 
-        RobotContainer.driveTrain.autonomousRunningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp()
-                - RobotContainer.driveTrain.autonomousStartTime;
-
-        if (RobotContainer.driveTrain.autonomousRunningTime > this.startTime && RobotContainer.driveTrain.autonomousRunningTime < this.endTime) {
-            RobotContainer.driveTrain.moveSwerveAxis(y, x*-1, rotationPower);
-        }
-
-        SmartDashboard.putNumber("X", x);
-        SmartDashboard.putNumber("Y", y);
-        SmartDashboard.putNumber("Rotation Power", rotationPower);
-        SmartDashboard.putNumber("Running Time", RobotContainer.driveTrain.autonomousRunningTime);
+    public void resetAutoClock() {
+        RobotContainer.driveTrain.autonomousStartTime = Timer.getFPGATimestamp();
+        RobotContainer.driveTrain.autonomousRunningTime = 0;
     }
 
     public void circle(boolean leftOrRight) {
-        double gradientX = 0;
-        double gradientY = -1;
 
-        gradientY += .1;
-        double yDir = gradientY / Math.abs(gradientY);
+        double circleX = 0;
+        double angle = 0;
+        boolean circleDone = false;
 
-        double finalY = yDir * (gradientY * gradientY) - .5;
+        /**
+         * @param leftOrRight - (boolean) If you are going right put a true and if the
+         *                    direction is left put a false
+         */
 
-        RobotContainer.driveTrain.moveSwerveAxis(0, finalY, 0);
+        if (circleX <= 1.5) {
+            circleX += .008;
+            circleDone = false;
+            angle = ((.124 * Math.sin(14.2 * circleX + 1.6) + 1.8 * circleX - .2) / 1.6);
+        } else {
+            circleX = 0;
+            circleDone = true;
+        }
+
+        if (leftOrRight == false) {
+            angle = Math.abs(angle - 2);
+        }
+
+        RobotContainer.driveTrain.motorFL.drive(.35 * -1, angle, 1);
+        RobotContainer.driveTrain.motorFR.drive(.35, angle, 1);
+        RobotContainer.driveTrain.motorRR.drive(.35, angle, 1);
+        RobotContainer.driveTrain.motorRL.drive(.35 * -1, angle, 1);
     }
 
     public void resetGyro() {
@@ -90,5 +157,9 @@ public class AutonomousStep {
 
     public void stopAll() {
         RobotContainer.driveTrain.stopAllMotors();
+    }
+
+    public boolean stepState() {
+        return stepDone;
     }
 }

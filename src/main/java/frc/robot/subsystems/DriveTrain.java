@@ -50,8 +50,9 @@ public class DriveTrain extends SubsystemBase {
   public double turnyThingy = 0;
 
   public boolean autonomous; // Autonomous state
-  public double autonomousStartTime;
+
   public double autonomousRunningTime;
+  public double autonomousStartTime;
 
   public DriveTrain() {
     motorFL = new AlphaMotors(2, 1, 12, 10, 0);
@@ -75,35 +76,37 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  //Sets weather or not the bot is running in autonomous is enabled.
+  // Sets weather or not the bot is running in autonomous is enabled.
   public void setAutonomousState(boolean enabled) {
     autonomous = enabled;
   }
 
-
-  //Main method for driving.
+  // Main method for driving.
+  public void autonomousTimer() {
+    autonomousRunningTime = edu.wpi.first.wpilibj.Timer.getFPGATimestamp()
+    - autonomousStartTime;
+  }
   public void moveSwerveAxis(double leftX, double leftY, double rightX) {
     double mod;
 
     leftY *= -1;
 
-   if (autonomous) {
-     mod = 1;
-   } else {
-     mod = .3;
-   }
-
-
-   if (RobotContainer.limeValue()) {
-    turnyThingy = limes();
-  } else {
-    // creation of a deadzone
-    if (rightX >= .05 || rightX <= -.05) {
-      turnyThingy = rightX;
-    }else{
-      turnyThingy = 0;
+    if (autonomous) {
+      mod = 1;
+    } else {
+      mod = .3;
     }
-  }
+
+    if (RobotContainer.limeValue()) {
+      turnyThingy = limes();
+    } else {
+      // creation of a deadzone
+      if (rightX >= .05 || rightX <= -.05) {
+        turnyThingy = rightX;
+      } else {
+        turnyThingy = 0;
+      }
+    }
 
     // a b c and d are all sides of the robot and creates wheels as the sides. FR
     // wheel is wheel B D for example

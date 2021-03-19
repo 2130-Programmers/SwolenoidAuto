@@ -7,12 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.AlphaMotors;
 import frc.robot.subsystems.AutonomousStep;
+import frc.robot.subsystems.DriveTrain;
 
 
 /**
@@ -23,9 +25,7 @@ import frc.robot.subsystems.AutonomousStep;
  */
 public class Robot extends TimedRobot {
 
-
-  //¡AUTONOMOUS VARIABLE!
-  public static double storedRotation;
+  public Encoder driveEncoder;
 
 private Command m_autonomousCommand;
 
@@ -57,6 +57,13 @@ private Command m_autonomousCommand;
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    SmartDashboard.putNumber("FR Encoder Value", RobotContainer.driveTrain.motorFR.encoderCount());
+    SmartDashboard.putNumber("FL Encoder Value", RobotContainer.driveTrain.motorFL.encoderCount());
+    SmartDashboard.putNumber("RR Encoder Value", RobotContainer.driveTrain.motorRR.encoderCount());
+    SmartDashboard.putNumber("RL Encoder Value", RobotContainer.driveTrain.motorRL.encoderCount());
+
+    SmartDashboard.putNumber("Rotation", RobotContainer.gyro.getAngle());
   }
 
   /**
@@ -68,7 +75,7 @@ private Command m_autonomousCommand;
 
   @Override
   public void disabledPeriodic() {
-
+    RobotContainer.driveTrain.stopAllMotors();
   }
 
   /**
@@ -78,21 +85,13 @@ private Command m_autonomousCommand;
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    RobotContainer.driveTrain.findAllZeros();
     RobotContainer.gyro.calibrate();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-
-
-    RobotContainer.driveTrain.findAllZeros();
-
-        //Sets AutonomousState to true.
-        AutonomousStep startAutoTimer = new AutonomousStep();
-        RobotContainer.driveTrain.setAutonomousState(true);    
-        startAutoTimer.resetAutonomousTime();
-
     }
 
   /**
@@ -102,6 +101,8 @@ private Command m_autonomousCommand;
   public void autonomousPeriodic() {
 
     RobotContainer.driveTrain.zeroAllEncodersBasedOnProx();
+
+    SmartDashboard.putNumber("Running Time", RobotContainer.driveTrain.autonomousRunningTime);
 
   }
 
@@ -123,8 +124,6 @@ private Command m_autonomousCommand;
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Rotation", RobotContainer.gyro.getAngle());
-
     RobotContainer.driveTrain.zeroAllEncodersBasedOnProx();
   }
 

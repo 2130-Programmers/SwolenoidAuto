@@ -8,9 +8,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -25,9 +25,10 @@ public class AlphaMotors extends SubsystemBase {
 
     private double STICK_ERROR = Constants.STICK_ERROR;
 
-    private TalonSRX driveMotor;
+    private TalonFX driveMotor;
     private TalonSRX rotationMotor; // The directional motor for the use of the
                                     // drive motor.
+    private Encoder driveEncoder;
 
     private Encoder rotationEncoder; // The encoder for the use of the
                                      // turreting motor.
@@ -79,9 +80,13 @@ public class AlphaMotors extends SubsystemBase {
          */
 
         rotationMotor = new TalonSRX(rotate); //
-        driveMotor = new TalonSRX(speed);
+        driveMotor = new TalonFX(speed);
+
+        driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        driveMotor.setInverted(false);
 
         rotationEncoder = new Encoder(encSourceA, encSourceB);
+
         rotationProx = new DigitalInput(proxChannel);
 
         this.setMinMaxOutput(Constants.TURRET_SPEED_MAX_OUTPUT, Constants.TURRET_SPEED_MIN_OUTPUT);
@@ -288,6 +293,10 @@ public class AlphaMotors extends SubsystemBase {
         rotationEncoder.reset();
     }
 
+    public void zeroDriveEncoder() {
+        driveEncoder.reset();
+    }
+
     public boolean proxValue() {
         return !rotationProx.get();
     }
@@ -372,5 +381,10 @@ public class AlphaMotors extends SubsystemBase {
         double pointS = angle*1.6777777777777777777777777777777777777777777777777;
 
         pointToTarget(pointS);
+    }
+
+    //Drive encoder distance.
+    public double encoderCount() {
+        return driveMotor.getSelectedSensorPosition();
     }
 }
