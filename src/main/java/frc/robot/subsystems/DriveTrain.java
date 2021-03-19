@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -209,5 +210,21 @@ public class DriveTrain extends SubsystemBase {
     motorFR.brodieAuto(0, 0);
     motorRL.brodieAuto(0, 0);
     motorFL.brodieAuto(0, 0);
+  }
+
+  public ErrorCode zeroDriveEncoder(String motor) {
+    switch(motor) {
+      case "FL":
+        return motorFL.zeroDriveEncoder();
+      case "FR":
+        return motorFR.zeroDriveEncoder();
+      case "RL":
+        return motorRL.zeroDriveEncoder();
+      case "RR":
+        return motorRR.zeroDriveEncoder();
+      default:
+        return ErrorCode.valueOf(1000);
+      
+    }
   }
 }

@@ -7,10 +7,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -28,7 +29,6 @@ public class AlphaMotors extends SubsystemBase {
     private TalonFX driveMotor;
     private TalonSRX rotationMotor; // The directional motor for the use of the
                                     // drive motor.
-    private Encoder driveEncoder;
 
     private Encoder rotationEncoder; // The encoder for the use of the
                                      // turreting motor.
@@ -40,8 +40,6 @@ public class AlphaMotors extends SubsystemBase {
     public double encoderRemainingValue;
 
     public boolean inMethod;
-
-    private final double MAX_VOLTS = 4.95;
 
     public double deleteMe;
 
@@ -293,8 +291,8 @@ public class AlphaMotors extends SubsystemBase {
         rotationEncoder.reset();
     }
 
-    public void zeroDriveEncoder() {
-        driveEncoder.reset();
+    public ErrorCode zeroDriveEncoder() {
+        return driveMotor.setSelectedSensorPosition(0);
     }
 
     public boolean proxValue() {

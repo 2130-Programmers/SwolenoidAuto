@@ -88,6 +88,11 @@ private Command m_autonomousCommand;
     RobotContainer.driveTrain.findAllZeros();
     RobotContainer.gyro.calibrate();
 
+    System.out.print("FL: " + RobotContainer.driveTrain.zeroDriveEncoder("FL"));
+    System.out.print("FL: " + RobotContainer.driveTrain.zeroDriveEncoder("FR"));
+    System.out.print("FL: " + RobotContainer.driveTrain.zeroDriveEncoder("RL"));
+    System.out.print("FL: " + RobotContainer.driveTrain.zeroDriveEncoder("RR"));
+
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
