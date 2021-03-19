@@ -33,9 +33,9 @@ public class AutonomousStep {
             rotationPower = .05;
         }
 
-        double distanceRemaining = distance - Math.abs(((RobotContainer.driveTrain.motorFR.encoderCount()
+        double distanceRemaining = distance - ((RobotContainer.driveTrain.motorFR.encoderCount()
                 + RobotContainer.driveTrain.motorFL.encoderCount() + RobotContainer.driveTrain.motorRR.encoderCount()
-                + RobotContainer.driveTrain.motorRL.encoderCount()) / 4));
+                + RobotContainer.driveTrain.motorRL.encoderCount()) / 4);
 
         if (distanceRemaining > 20) {
             switch (direction) {
@@ -87,7 +87,7 @@ public class AutonomousStep {
         SmartDashboard.putNumber("X", x);
         SmartDashboard.putNumber("Y", y);
 
-        RobotContainer.driveTrain.moveSwerveAxis(y * power, x * (-1 * power), rotationPower);
+        RobotContainer.driveTrain.moveSwerveAxis(x * power, y * (-1 * power), rotationPower);
     }
 
     public void rotate(double rotation) {

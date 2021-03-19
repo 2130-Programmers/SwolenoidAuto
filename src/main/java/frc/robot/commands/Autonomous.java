@@ -46,11 +46,6 @@ public class Autonomous extends CommandBase {
   public void initialize() {
     RobotContainer.driveTrain.setAutonomousState(true);
     resetAutoTimer.resetAutoClock();
-
-    RobotContainer.driveTrain.motorFR.zeroDriveEncoder();
-    RobotContainer.driveTrain.motorFL.zeroDriveEncoder();
-    RobotContainer.driveTrain.motorRR.zeroDriveEncoder();
-    RobotContainer.driveTrain.motorRL.zeroDriveEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -66,7 +61,7 @@ public class Autonomous extends CommandBase {
     // .stopAll to stop all motors
     // .resetGyro to zero the gyro
 
-   drive1.run(0, .25, 10);
+   drive1.run(0, .25, 1000);
 
   // circle.circle(true);
 

@@ -28,7 +28,6 @@ public class AlphaMotors extends SubsystemBase {
     private TalonFX driveMotor;
     private TalonSRX rotationMotor; // The directional motor for the use of the
                                     // drive motor.
-    private Encoder driveEncoder;
 
     private Encoder rotationEncoder; // The encoder for the use of the
                                      // turreting motor.
@@ -294,7 +293,7 @@ public class AlphaMotors extends SubsystemBase {
     }
 
     public void zeroDriveEncoder() {
-        driveEncoder.reset();
+        driveMotor.setSelectedSensorPosition(0);
     }
 
     public boolean proxValue() {
