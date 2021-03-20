@@ -293,7 +293,7 @@ public class AlphaMotors extends SubsystemBase {
     }
 
     public void zeroDriveEncoder() {
-        driveMotor.setSelectedSensorPosition(0);
+        driveMotor.getSensorCollection().setIntegratedSensorPosition(0, 10);
     }
 
     public boolean proxValue() {
